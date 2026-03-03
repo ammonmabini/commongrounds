@@ -38,6 +38,6 @@ class Book(models.Model):
         return reverse('bookclub:book', kwargs={'pk' : self.pk})
 
     class Meta:
-        ordering = ['-pubYear']
+        ordering = ['-publication_year']
         verbose_name = 'book'
         verbose_name_plural = 'books'
