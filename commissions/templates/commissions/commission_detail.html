@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ commission.title }}</title>
+  </head>
+  <body>
+    <h1>{{ commission.title }}</h1>
+
+    <p><strong>People required:</strong> {{ commission.people_required }}</p>
+    <p><strong>Description:</strong> {{ commission.description }}</p>
+
+    <p>
+      <strong>Created:</strong> {{ commission.created_on }}<br />
+      <strong>Updated:</strong> {{ commission.updated_on }}
+    </p>
+
+    <p><a href="/commissions/requests">Back to list</a></p>
+  </body>
+</html>

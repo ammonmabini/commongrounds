@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Commission Requests</title>
+  </head>
+  <body>
+    <h1>Commission Requests</h1>
+
+    <ul>
+      {% for c in commissions %}
+        <li>
+          <a href="/commissions/request/{{ c.id }}">{{ c.title }}</a>
+          — needs {{ c.people_required }} people
+          <br />
+          <small>Created: {{ c.created_on }}</small>
+        </li>
+      {% empty %}
+        <li>No commission requests yet.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
