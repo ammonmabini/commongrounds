@@ -1,0 +1,23 @@
+<head>
+    <title>DIY Projects</title>
+</head>
+
+<body>
+
+<h1>DIY Projects</h1>
+
+<ul>
+    {% for project in projects %}
+        <li>
+            <a href="{{ project.get_absolute_url }}">
+                {{ project.title }}
+            </a>
+
+            {% if project.category %}
+                - {{ project.category.name }}
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+</body>
