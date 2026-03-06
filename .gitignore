@@ -1,11 +1,12 @@
-db.sqlite3
+pidb.sqlite3
 .env
 *.pyc
 *.log
 
 __pycache__/
 env/
-myenv/.venv/
+myenv/
+.venv/
 __pycache__/
 db.sqlite3
 .DS_Store

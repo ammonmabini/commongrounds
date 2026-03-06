@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ commission.title }}</title>
-  </head>
-  <body>
-    <h1>{{ commission.title }}</h1>
+{% extends 'commissions_base.html' %}
+
+{% block header %}
+  <h3>Commission Details</h3>
+    <h1>{{ commission.title }}</h1> {% endblock %}
+
+{% block content %}
 
     <p><strong>People required:</strong> {{ commission.people_required }}</p>
     <p><strong>Description:</strong> {{ commission.description }}</p>
@@ -17,5 +15,4 @@
     </p>
 
     <p><a href="/commissions/requests">Back to list</a></p>
-  </body>
-</html>
+{% endblock %}
