@@ -8,8 +8,10 @@
 {% endblock %}
 {% block content %}
     <ul>
-        <li>Genre: {{ book.genre.name }}</li>
-        <li>Author: {{ book.author }}</li>
-        <li>Year Published: {{ book.publication_year }}</li>
+        <li><b>Genre: </b>{{ book.genre.name }}</li>
+        <li><b>Author: </b>{{ book.author }}</li>
+        <li><b>Year Published: </b>{{ book.publication_year }}</li>
+        <li><b>Created on: </b>{{ book.created_on }}</li>
+        <li><b>Updated on: </b>{{ book.updated_on }}</li>
     </ul>
 {% endblock %}
