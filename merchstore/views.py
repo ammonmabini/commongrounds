@@ -11,10 +11,6 @@ from accounts.models import Profile
 
 from .forms import ProductForm, TransactionForm
 from .models import Product, Transaction
-from .strategies import (
-    AuthenticatedPurchaseStrategy,
-    GuestPurchaseStrategy,
-)
 
 
 def user_is_market_seller(user):
@@ -23,6 +19,14 @@ def user_is_market_seller(user):
         and hasattr(user, 'profile')
         and user.profile.role == Profile.ROLE_MARKET_SELLER
     )
+
+
+def save_transaction(request, product, form):
+    transaction = form.save(commit=False)
+    transaction.buyer = request.user.profile
+    transaction.product = product
+    transaction.status = Transaction.STATUS_ON_CART
+    transaction.save()
 
 
 def item_list(request):
@@ -78,13 +82,17 @@ class ProductDetailView(View):
                 self.get_context_data(product, form),
             )
 
+        if form.is_valid() and request.user.is_authenticated:
+            save_transaction(request, product, form)
+            return redirect('merchstore:cart')
+
         if form.is_valid():
-            strategy = (
-                AuthenticatedPurchaseStrategy()
-                if request.user.is_authenticated
-                else GuestPurchaseStrategy()
-            )
-            return strategy.execute(request, product, form)
+            request.session['pending_purchase'] = {
+                'product_id': product.pk,
+                'amount': form.cleaned_data.get('amount'),
+            }
+            request.session.modified = True
+            return redirect('login')
 
         return render(
             request,
@@ -181,4 +189,5 @@ def complete_pending_purchase(request):
         return redirect(product.get_absolute_url())
 
     request.session.pop('pending_purchase', None)
-    return AuthenticatedPurchaseStrategy().execute(request, product, form)
+    save_transaction(request, product, form)
+    return redirect('merchstore:cart')
