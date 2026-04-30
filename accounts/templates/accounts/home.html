@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Grounds</title>
+</head>
+<body>
+    <main>
+        <h1>Common Grounds</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'merchstore:item_list' %}">Merchandise Store</a></li>
+                <li><a href="/bookclub/books">Book Club</a></li>
+                <li><a href="/localevents/events">Local Events</a></li>
+                <li><a href="/diyprojects/projects">DIY Projects</a></li>
+                <li><a href="/commissions/">Commissions</a></li>
+            </ul>
+        </nav>
+
+        {% if user.is_authenticated %}
+            <p>Signed in as {{ user.profile.display_name|default:user.username }}.</p>
+            <p><a href="{% url 'accounts:profile_update' user.username %}">Edit profile</a></p>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Log out</button>
+            </form>
+        {% else %}
+            <p><a href="{% url 'login' %}">Log in</a> or <a href="{% url 'accounts:register' %}">register</a>.</p>
+        {% endif %}
+    </main>
+</body>
+</html>
