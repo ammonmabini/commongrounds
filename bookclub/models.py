@@ -36,9 +36,9 @@ class Book(models.Model):
         blank=True,
     )
     author = models.CharField()
-    synopsis = models.TextField()
+    synopsis = models.TextField(null=True, blank=True)
     publication_year = models.IntegerField()
-    available_to_borrow = models.BooleanField()
+    available_to_borrow = models.BooleanField(null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -58,7 +58,7 @@ class BookReview(models.Model):
     user_reviewer = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
-        related_name='reviews',
+        related_name='user_reviews',
         null=True,
         blank=True,
     )
@@ -99,14 +99,14 @@ class Borrow(models.Model):
     book = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
-        related_name='bookmarks',
+        related_name='borrowers',
         null = True,
         blank = True,
     )
     borrower = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
-        related_name='bookmarks',
+        related_name='borrowed',
         null = True,
         blank = True,
     )
