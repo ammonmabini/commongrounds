@@ -15,6 +15,32 @@
     {% endif %}
     <p>Created on {{ event.created_on|date:"Y-m-d (H:i)" }}</p>
     <p>Last updated on {{ event.updated_on|date:"Y-m-d (H:i)" }}</p>
+    <p>Signups: {{ signup_count }} / {{ event.event_capacity }}</p>
+
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'localevents:event_signup' event.id %}">
+            {% csrf_token %}
+            <button type="submit" {% if not can_signup %}disabled{% endif %}>Sign Up</button>
+        </form>
+    {% else %}
+            <form method="get" action="{% url 'localevents:event_signup' event.id %}">
+                <input type="hidden" name="from_detail" value="1">
+                <button type="submit" {% if is_full %}disabled{% endif %}>Sign Up</button>
+            </form>
+    {% endif %}
+
+    {% if is_full %}
+        <p>This event is full.</p>
+    {% elif has_signed_up %}
+        <p>You are already signed up for this event.</p>
+    {% elif is_owner %}
+        <p>You cannot sign up for your own event.</p>
+    {% endif %}
+
+    {% if is_owner %}
+        <p><a href="{% url 'localevents:event_edit' event.id %}">Edit Event</a></p>
+    {% endif %}
+
     <br/>
     <a href="{% url 'localevents:event_list' %}">Return to Event List</a>
 
