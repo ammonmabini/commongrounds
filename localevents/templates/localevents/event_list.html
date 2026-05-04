@@ -5,10 +5,36 @@
 
 {% block content %}
 
+    {% if user.is_authenticated %}
+        <h2>Events Created</h2>
+        <ul>
+        {% for event in created_events %}
+            <li><a href="{{ event.get_absolute_url }}">{{ event.title }} - {{ event.category }}</a></li>
+        {% empty %}
+            <li>No created events yet.</li>
+        {% endfor %}
+        </ul>
+
+        <h2>Events Signed Up</h2>
+        <ul>
+        {% for event in signed_up_events %}
+            <li><a href="{{ event.get_absolute_url }}">{{ event.title }} - {{ event.category }}</a></li>
+        {% empty %}
+            <li>No signed up events yet.</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>All Events</h2>
     <ul>
-    {% for event in event_list %}
-        <li><a href="{{ event.get_absolute_url }}">{{ event.title }} - {{ event.category }}</a></li>  
+    {% for event in all_events %}
+        <li><a href="{{ event.get_absolute_url }}">{{ event.title }} - {{ event.category }}</a></li>
+    {% empty %}
+        <li>No events available.</li>
     {% endfor %}
     </ul>
+
+
+    <p><a href="{% url 'localevents:event_add' %}">Create Event</a></p>
 
 {% endblock %}

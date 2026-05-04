@@ -1,0 +1,18 @@
+{% extends 'localevents_base.html' %}
+
+{% block title %}Create Event{% endblock %}
+
+{% block header %}
+	<h3>Create Event</h3>
+{% endblock %}
+
+{% block content %}
+	<h1>Create Event</h1>
+	<p>Organizer: {{ organizer_profile.display_name }}</p>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Create Event</button>
+	</form>
+	<p><a href="{% url 'localevents:event_list' %}">Back to Event List</a></p>
+{% endblock %}
