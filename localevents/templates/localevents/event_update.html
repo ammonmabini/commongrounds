@@ -1,0 +1,17 @@
+{% extends 'localevents_base.html' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block header %}
+	<h3>Edit Event</h3>
+{% endblock %}
+
+{% block content %}
+	<h1>Edit Event</h1>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Save Changes</button>
+	</form>
+	<p><a href="{{ event.get_absolute_url }}">Back to Event Detail</a></p>
+{% endblock %}
